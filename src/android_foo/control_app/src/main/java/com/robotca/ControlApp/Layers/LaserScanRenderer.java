@@ -90,6 +90,7 @@ public class LaserScanRenderer implements GLSurfaceView.Renderer, MessageListene
 
     // Controls the density of scan points
     private float laserScanDetail;
+    private int invert_laser_scan = 1;
 
     // Lock for synchronizing drawing
     private final Object mutex;
@@ -469,6 +470,9 @@ public class LaserScanRenderer implements GLSurfaceView.Renderer, MessageListene
      * @param laserScan The LaserScan
      */
     private void updateVertexBuffer(LaserScan laserScan) {
+        if(PreferenceManager.getDefaultSharedPreferences(controlApp).getBoolean("prefs_reverse_angle_reading_key", true)){
+            invert_laser_scan = -1;
+        }
         float[] ranges = laserScan.getRanges();
         int size = ((ranges.length) + 2) * (3 + 4);
 
@@ -518,8 +522,8 @@ public class LaserScanRenderer implements GLSurfaceView.Renderer, MessageListene
                 ranges[i] = MAX_RANGE;
 
             // x, y, z
-            x = (float) (ranges[i] * Math.cos(angle));
-            y = (float) (ranges[i] * Math.sin(angle));
+            x = (float) (ranges[i] * Math.cos(angle)) * invert_laser_scan;
+            y = (float) (ranges[i] * Math.sin(angle)) * invert_laser_scan;
 
             p = ranges[i];
 
