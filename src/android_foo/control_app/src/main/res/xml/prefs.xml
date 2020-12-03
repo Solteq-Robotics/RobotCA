@@ -154,6 +154,14 @@
             android:title="@string/reverse_angle_reading_title" />
 
         <SwitchPreference
+            android:checked="true"
+            android:defaultValue="true"
+            android:key="@string/flip_x_y_axis_key"
+            android:summaryOff="@string/flip_x_y_axis_summary"
+            android:summaryOn="@string/flip_x_y_axis_summary"
+            android:title="@string/flip_x_y_axis_title" />
+
+        <SwitchPreference
             android:checked="false"
             android:defaultValue="false"
             android:key="@string/prefs_invert_x_axis_key"

@@ -8,7 +8,7 @@
     <string name="joy_topic">/joy_teleop/cmd_vel</string>
     <string name="camera_topic">/image_raw/compressed</string>
     <string name="laser_scan_topic">/scan</string>
-    <string name="odometry_topic">/odometry/filtered</string>
+    <string name="odometry_topic">/odometry/gim_localization_node/filtered</string>
     <string name="pose_topic">/pose</string>
     <string name="imu_topic">/ubloxTest/navheading</string>
     <string name="navsat_topic">/navsat/fix</string>
@@ -192,6 +192,10 @@
     <string name="prefs_invert_angular_velocity_key">prefs_invert_angular_velocity_key</string>
     <string name="invert_angular_velocity_summary">Invert angular velocity driving direction</string>
     <string name="invert_x_axis_summary">Invert X-Axis driving direction</string>
+    <string name="flip_x_y_axis_key">flip_x_y_axis_key</string>
+    <string name="flip_x_y_axis_prompt">Flip X- and Y-axis</string>
+    <string name="flip_x_y_axis_title">Flip X- and Y-axis</string>
+    <string name="flip_x_y_axis_summary">Flip X- and Y-axis</string>
     <string name="invert_x_axis_title">Invert X-Axis</string>
     <string name="invert_angular_velocity_title">Invert Angular Velocity</string>
     <string name="invert_y_axis_title">Invert Y-Axis</string>

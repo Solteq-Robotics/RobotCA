@@ -519,7 +519,7 @@ public class LaserScanRenderer implements GLSurfaceView.Renderer, MessageListene
 
             // x, y, z
             x = (float) (ranges[i] * Math.cos(angle));
-            y = -(float) (ranges[i] * Math.sin(angle));
+            y = (float) (ranges[i] * Math.sin(angle));
 
             p = ranges[i];
 

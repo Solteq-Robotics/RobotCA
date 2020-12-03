@@ -40,6 +40,8 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
     public static final String IMU_TOPIC_KEY = "IMU_TOPIC_KEY";
     /** Bundle key for reverse laser scan */
     public static final String REVERSE_LASER_SCAN_KEY = "REVERSE_LASER_SCAN_KEY";
+    /** Bundle key for flip x- and y-axis */
+    public static final String FLIP_X_Y_AXIS_KEY = "FLIP_X_Y_AXIS_KEY";
     /** Bundle key for invert x-axis */
     public static final String INVERT_X_KEY = "INVERT_X_KEY";
     /** Bundle key for invert x-axis */
@@ -65,6 +67,7 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
     private String poseTopic;
     private String imuTopic;
     private boolean reverseLaserScan;
+    private boolean flipXYAxis;
     private boolean invertX;
     private boolean invertY;
     private boolean invertAngularVelocity;
@@ -83,10 +86,11 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
         cameraTopic = "/image_raw/compressed";
         laserTopic = "/scan";
         navsatTopic = "/navsat/fix";
-        odometryTopic = "/odometry/filtered";
+        odometryTopic = "/odometry/gim_localization_node/filtered";
         poseTopic = "/pose";
         imuTopic = "/ubloxTest/navheading";
         reverseLaserScan = false;
+        flipXYAxis = false;
         invertX = false;
         invertY = false;
         invertAngularVelocity = false;
@@ -108,8 +112,9 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
      */
     public RobotInfo(UUID id, String name, String masterUriString, String joystickTopic,
                      String laserTopic, String cameraTopic,String navsatTopic,
-                     String odometryTopic, String poseTopic,String imuTopic , boolean reverseLaserScan,
-                     boolean invertX, boolean invertY, boolean invertAngularVelocity) {
+                     String odometryTopic, String poseTopic, String imuTopic,
+                     boolean reverseLaserScan, boolean invertX, boolean invertY,
+                     boolean invertAngularVelocity, boolean flipXYAxis) {
         this.id = id;
         this.name = name;
         this.masterUriString = masterUriString;
@@ -121,6 +126,7 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
         this.poseTopic = poseTopic;
         this.imuTopic = imuTopic;
         this.reverseLaserScan = reverseLaserScan;
+        this.flipXYAxis = flipXYAxis;
         this.invertX = invertX;
         this.invertY = invertY;
         this.invertAngularVelocity = invertAngularVelocity;
@@ -287,11 +293,26 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
     }
 
     /**
+     * @return If x- and y-axis should be flipped
+     */
+    public boolean isFlipXYAxis() {
+        return flipXYAxis;
+    }
+
+    /**
      * Sets whether the laser scan should be reversed
      * @param reverseLaserScan Reverse if true, false otherwise
      */
     public void setReverseLaserScan(boolean reverseLaserScan) {
         this.reverseLaserScan = reverseLaserScan;
+    }
+
+    /**
+     * Sets whether the x and y axis should be flipped
+     * @param flipXYAxis Flipped if true, false otherwise
+     */
+    public void setFlipXYAxis(boolean flipXYAxis) {
+        this.flipXYAxis = flipXYAxis;
     }
 
     /**
@@ -406,10 +427,11 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
         cameraTopic = bundle.getString(CAMERA_TOPIC_KEY, "/image_raw/compressed");
         laserTopic = bundle.getString(LASER_SCAN_TOPIC_KEY, "/scan");
         navsatTopic = bundle.getString(NAVSAT_TOPIC_KEY, "/navsat/fix");
-        odometryTopic = bundle.getString(ODOMETRY_TOPIC_KEY, "/odometry/filtered");
+        odometryTopic = bundle.getString(ODOMETRY_TOPIC_KEY, "/odometry/gim_localization_node/filtered");
         poseTopic = bundle.getString(POSE_TOPIC_KEY, "/pose");
         imuTopic = bundle.getString(IMU_TOPIC_KEY, "/ubloxTest/navheading");
         reverseLaserScan = bundle.getBoolean(REVERSE_LASER_SCAN_KEY, false);
+        flipXYAxis = bundle.getBoolean(FLIP_X_Y_AXIS_KEY, false);
         invertX = bundle.getBoolean(INVERT_X_KEY, false);
         invertY = bundle.getBoolean(INVERT_Y_KEY, false);
         invertAngularVelocity = bundle.getBoolean(INVERT_ANGULAR_VELOCITY_KEY, false);
@@ -420,10 +442,11 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
         cameraTopic = prefs.getString(RobotStorage.getPreferenceKey(CAMERA_TOPIC_KEY), "/image_raw/compressed");
         laserTopic = prefs.getString(RobotStorage.getPreferenceKey(LASER_SCAN_TOPIC_KEY), "/scan");
         navsatTopic = prefs.getString(RobotStorage.getPreferenceKey(NAVSAT_TOPIC_KEY), "/navsat/fix");
-        odometryTopic = prefs.getString(RobotStorage.getPreferenceKey(ODOMETRY_TOPIC_KEY), "/odometry/filtered");
+        odometryTopic = prefs.getString(RobotStorage.getPreferenceKey(ODOMETRY_TOPIC_KEY), "/odometry/gim_localization_node/filtered");
         poseTopic = prefs.getString(RobotStorage.getPreferenceKey(POSE_TOPIC_KEY), "/pose");
         imuTopic = prefs.getString(RobotStorage.getPreferenceKey(IMU_TOPIC_KEY), "/ubloxTest/navheading");
         reverseLaserScan = prefs.getBoolean(RobotStorage.getPreferenceKey(REVERSE_LASER_SCAN_KEY), false);
+        flipXYAxis = prefs.getBoolean(RobotStorage.getPreferenceKey(FLIP_X_Y_AXIS_KEY), true);
         invertX = prefs.getBoolean(RobotStorage.getPreferenceKey(INVERT_X_KEY), false);
         invertY = prefs.getBoolean(RobotStorage.getPreferenceKey(INVERT_Y_KEY), false);
         invertAngularVelocity = prefs.getBoolean(RobotStorage.getPreferenceKey(INVERT_ANGULAR_VELOCITY_KEY), false);
@@ -442,6 +465,7 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
         bundle.putString(POSE_TOPIC_KEY, poseTopic);
         bundle.putString(IMU_TOPIC_KEY, imuTopic);
         bundle.putBoolean(REVERSE_LASER_SCAN_KEY, reverseLaserScan);
+        bundle.putBoolean(FLIP_X_Y_AXIS_KEY, flipXYAxis);
         bundle.putBoolean(INVERT_X_KEY, invertX);
         bundle.putBoolean(INVERT_Y_KEY, invertY);
         bundle.putBoolean(INVERT_ANGULAR_VELOCITY_KEY, invertAngularVelocity);
@@ -456,6 +480,7 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
         prefs.putString(RobotStorage.getPreferenceKey(POSE_TOPIC_KEY), poseTopic);
         prefs.putString(RobotStorage.getPreferenceKey(IMU_TOPIC_KEY), imuTopic);
         prefs.putBoolean(RobotStorage.getPreferenceKey(REVERSE_LASER_SCAN_KEY), reverseLaserScan);
+        prefs.putBoolean(RobotStorage.getPreferenceKey(FLIP_X_Y_AXIS_KEY), flipXYAxis);
         prefs.putBoolean(RobotStorage.getPreferenceKey(INVERT_X_KEY), invertX);
         prefs.putBoolean(RobotStorage.getPreferenceKey(INVERT_Y_KEY), invertY);
         prefs.putBoolean(RobotStorage.getPreferenceKey(INVERT_ANGULAR_VELOCITY_KEY), invertAngularVelocity);
