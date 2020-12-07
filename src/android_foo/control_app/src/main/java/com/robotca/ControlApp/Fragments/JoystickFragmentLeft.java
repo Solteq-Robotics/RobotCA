@@ -17,15 +17,15 @@ import com.robotca.ControlApp.Views.JoystickView;
  *
  * Created by Michael Brunson on 11/7/15.
  */
-public class JoystickFragment extends Fragment {
-    private JoystickView virtualJoystick;
+public class JoystickFragmentLeft extends Fragment {
+    private JoystickView virtualJoystick_left;
     private View view;
     private ControlMode controlMode = ControlMode.Joystick;
 
     /**
      * Default Constructor.
      */
-    public JoystickFragment() {
+    public JoystickFragmentLeft() {
     }
 
     /**
@@ -37,10 +37,10 @@ public class JoystickFragment extends Fragment {
 
         // Inflate the view if needed
         if (view == null) {
-            view = inflater.inflate(R.layout.fragment_joystick_view, container, false);
+            view = inflater.inflate(R.layout.fragment_joystick_view_left, container, false);
 
             // Grab the JoystickView and set its topic
-            virtualJoystick = (JoystickView) view.findViewById(R.id.joystick_view);
+            virtualJoystick_left = (JoystickView) view.findViewById(R.id.joystick_view_left);
         }
 
         return view;
@@ -51,7 +51,7 @@ public class JoystickFragment extends Fragment {
      * @return The JoystickView
      */
     public JoystickView getJoystickView() {
-        return virtualJoystick;
+        return virtualJoystick_left;
     }
 
     /**
@@ -77,7 +77,7 @@ public class JoystickFragment extends Fragment {
      */
     @SuppressWarnings("unused") // Maybe later...
     public boolean hasAccelerometer() {
-        return virtualJoystick.hasAccelerometer();
+        return virtualJoystick_left.hasAccelerometer();
     }
 
     /**
@@ -88,11 +88,15 @@ public class JoystickFragment extends Fragment {
 
         switch (controlMode) {
             case Joystick:
+                hide();
+                break;
+
+            case TwoJoystick:
                 show();
                 break;
 
             case Tilt:
-                show();
+                hide();
                 break;
 
             default:
@@ -100,19 +104,19 @@ public class JoystickFragment extends Fragment {
                 break;
         }
 
-        virtualJoystick.setControlMode(controlMode);
-        virtualJoystick.controlSchemeChanged();
+        virtualJoystick_left.setControlMode(controlMode);
+        virtualJoystick_left.controlSchemeChanged();
     }
 
     /**
-     * Stops the JoystickFragment.
+     * Stops the JoystickFragmentLeft.
      */
     public void stop() {
-        virtualJoystick.stop();
+        virtualJoystick_left.stop();
     }
 
     /**
-     * Shows the JoystickFragment.
+     * Shows the JoystickFragmentLeft.
      */
     public void show(){
         getFragmentManager()
@@ -122,7 +126,7 @@ public class JoystickFragment extends Fragment {
     }
 
     /**
-     * Hides the JoystickFragment.
+     * Hides the JoystickFragmentLeft.
      */
     public void hide(){
         getFragmentManager()
