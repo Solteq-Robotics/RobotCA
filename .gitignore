@@ -14,13 +14,10 @@ gen/
 
 # Gradle files
 .gradle/
+gradle/
 build/
-**/.idea/libraries
-**/.idea/modules.xml
-**/.idea/workspace.xml
-src/android_foo/.idea
+.idea
 *.iml
-src/android_foo/gradle
 # Local configuration file (sdk path, etc)
 local.properties
 
