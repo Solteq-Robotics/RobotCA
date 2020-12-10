@@ -19,6 +19,7 @@ import org.osmdroid.views.overlay.Polygon;
  */
 public enum ControlMode {
     Joystick (true), // Joystick control
+    TwoJoystick (true), // Two Joystick control
     Tilt (true), // Tilt sensor control
     Waypoint (false), // Potential field waypoint control
     RandomWalk (false), // Random walk

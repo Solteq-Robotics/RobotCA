@@ -28,13 +28,22 @@
                 tools:layout="@layout/fragment_hud" />
             <fragment
                 android:id="@+id/joystick_fragment_right"
-                android:name="com.robotca.ControlApp.Fragments.JoystickFragment"
+                android:name="com.robotca.ControlApp.Fragments.JoystickFragmentRight"
                 android:layout_width="250dip"
                 android:layout_height="250dip"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                tools:layout="@layout/fragment_joystick_view" />
+                tools:layout="@layout/fragment_joystick_view_right" />
+            <fragment
+                android:id="@+id/joystick_fragment_left"
+                android:name="com.robotca.ControlApp.Fragments.JoystickFragmentLeft"
+                android:layout_width="250dip"
+                android:layout_height="250dip"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                tools:layout="@layout/fragment_joystick_view_left" />
 
         </RelativeLayout>
         <!-- The navigation drawer -->
