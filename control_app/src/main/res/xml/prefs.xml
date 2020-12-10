@@ -164,6 +164,14 @@
         <SwitchPreference
             android:checked="false"
             android:defaultValue="false"
+            android:key="@string/enable_holonomic_key"
+            android:summaryOff="@string/enable_holonomic_summary"
+            android:summaryOn="@string/enable_holonomic_summary"
+            android:title="@string/enable_holonomic_title" />
+
+        <SwitchPreference
+            android:checked="false"
+            android:defaultValue="false"
             android:key="@string/prefs_invert_x_axis_key"
             android:summaryOff="@string/invert_x_axis_summary"
             android:summaryOn="@string/invert_x_axis_summary"

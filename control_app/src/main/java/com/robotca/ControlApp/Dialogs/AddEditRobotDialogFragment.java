@@ -51,6 +51,7 @@ public class AddEditRobotDialogFragment extends DialogFragment {
 
     private CheckBox mReverseLaserScanCheckBox;
     private CheckBox mFlipXYAxisCheckBox;
+    private CheckBox mEnableHolonomicCheckBox;
     private CheckBox mInvertXAxisCheckBox;
     private CheckBox mInvertYAxisCheckBox;
     private CheckBox mInvertAngularVelocityCheckBox;
@@ -104,6 +105,7 @@ public class AddEditRobotDialogFragment extends DialogFragment {
         mImuTopicEditTextView = (EditText) v.findViewById(R.id.Imu_topic_edit_view);
         mReverseLaserScanCheckBox = (CheckBox) v.findViewById(R.id.reverse_laser_scan_check_box);
         mFlipXYAxisCheckBox = (CheckBox) v.findViewById(R.id.flip_x_y_axis_check_box);
+        mEnableHolonomicCheckBox = (CheckBox) v.findViewById(R.id.enable_holonomic_check_box);
         mInvertXAxisCheckBox = (CheckBox) v.findViewById(R.id.invert_x_axis_check_box);
         mInvertYAxisCheckBox = (CheckBox) v.findViewById(R.id.invert_y_axis_check_box);
         mInvertAngularVelocityCheckBox = (CheckBox) v.findViewById(R.id.invert_angular_velocity_check_box);
@@ -131,6 +133,7 @@ public class AddEditRobotDialogFragment extends DialogFragment {
         mImuTopicEditTextView.setText(mInfo.getImuTopic());
         mReverseLaserScanCheckBox.setChecked(mInfo.isReverseLaserScan());
         mFlipXYAxisCheckBox.setChecked(mInfo.isFlipXYAxis());
+        mEnableHolonomicCheckBox.setChecked(mInfo.isEnableHolonomic());
         mInvertXAxisCheckBox.setChecked(mInfo.isInvertX());
         mInvertYAxisCheckBox.setChecked(mInfo.isInvertY());
         mInvertAngularVelocityCheckBox.setChecked(mInfo.isInvertAngularVelocity());
@@ -155,6 +158,7 @@ public class AddEditRobotDialogFragment extends DialogFragment {
                         boolean invertY = mInvertYAxisCheckBox.isChecked();
                         boolean invertAngVel = mInvertAngularVelocityCheckBox.isChecked();
                         boolean flipXYAxis = mFlipXYAxisCheckBox.isChecked();
+                        boolean enableHolonomic = mEnableHolonomicCheckBox.isChecked();
 
                         if (masterUri.equals("")) {
                             Toast.makeText(getActivity(), "Master URI required", Toast.LENGTH_SHORT).show();
@@ -165,7 +169,7 @@ public class AddEditRobotDialogFragment extends DialogFragment {
                             mListener.onAddEditDialogPositiveClick(new RobotInfo(mInfo.getId(), name,
                                     masterUri, joystickTopic, laserScanTopic, cameraTopic,
                                     navsatTopic, odometryTopic, poseTopic, imuTopic, reverseLaserScan,
-                                    invertX, invertY, invertAngVel, flipXYAxis), mPosition);
+                                    invertX, invertY, invertAngVel, flipXYAxis, enableHolonomic), mPosition);
                             dialog.dismiss();
                         } else {
                             Toast.makeText(getActivity(), "Robot name required", Toast.LENGTH_SHORT).show();

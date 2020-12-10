@@ -42,6 +42,8 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
     public static final String REVERSE_LASER_SCAN_KEY = "REVERSE_LASER_SCAN_KEY";
     /** Bundle key for flip x- and y-axis */
     public static final String FLIP_X_Y_AXIS_KEY = "FLIP_X_Y_AXIS_KEY";
+    /** Bundle key for enable holonomic  */
+    public static final String ENABLE_HOLONOMIC_KEY = "ENABLE_HOLONOMIC_KEY";
     /** Bundle key for invert x-axis */
     public static final String INVERT_X_KEY = "INVERT_X_KEY";
     /** Bundle key for invert x-axis */
@@ -68,6 +70,7 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
     private String imuTopic;
     private boolean reverseLaserScan;
     private boolean flipXYAxis;
+    private boolean enableHolonomic;
     private boolean invertX;
     private boolean invertY;
     private boolean invertAngularVelocity;
@@ -91,6 +94,7 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
         imuTopic = "/ubloxTest/navheading";
         reverseLaserScan = false;
         flipXYAxis = false;
+        enableHolonomic = false;
         invertX = false;
         invertY = false;
         invertAngularVelocity = false;
@@ -109,12 +113,23 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
      * @param joystickTopic JoystickTopic name for this RobotInfo
      * @param laserTopic LaserTopic name for this RobotInfo
      * @param cameraTopic CameraTopic name for this RobotInfo
+     * @param navsatTopic NavSatTopic name for this RobotInfo
+     * @param odometryTopic OdometryTopic name for this RobotInfo
+     * @param poseTopic PoseTopic name for this RobotInfo
+     * @param imuTopic ImuTopic name for this RobotInfo
+     * @param reverseLaserScan Reverse Laser Scan flag value for this RobotInfo
+     * @param invertX Invert X-axis flag value for this RobotInfo
+     * @param invertY Invert Y-axis flag value for this RobotInfo
+     * @param invertAngularVelocity Invert Angular Velocity flag value for this RobotInfo
+     * @param flipXYAxis Flip X- and Y-axis flag value for this RobotInfo
+     * @param enableHolonomic Enable Holonomic flag value for this RobotInfo
      */
     public RobotInfo(UUID id, String name, String masterUriString, String joystickTopic,
                      String laserTopic, String cameraTopic,String navsatTopic,
                      String odometryTopic, String poseTopic, String imuTopic,
                      boolean reverseLaserScan, boolean invertX, boolean invertY,
-                     boolean invertAngularVelocity, boolean flipXYAxis) {
+                     boolean invertAngularVelocity, boolean flipXYAxis,
+                     boolean enableHolonomic) {
         this.id = id;
         this.name = name;
         this.masterUriString = masterUriString;
@@ -127,6 +142,7 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
         this.imuTopic = imuTopic;
         this.reverseLaserScan = reverseLaserScan;
         this.flipXYAxis = flipXYAxis;
+        this.enableHolonomic = enableHolonomic;
         this.invertX = invertX;
         this.invertY = invertY;
         this.invertAngularVelocity = invertAngularVelocity;
@@ -300,6 +316,13 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
     }
 
     /**
+     * @return If holonomic is enabled or not
+     */
+    public boolean isEnableHolonomic() {
+        return enableHolonomic;
+    }
+
+    /**
      * Sets whether the laser scan should be reversed
      * @param reverseLaserScan Reverse if true, false otherwise
      */
@@ -313,6 +336,14 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
      */
     public void setFlipXYAxis(boolean flipXYAxis) {
         this.flipXYAxis = flipXYAxis;
+    }
+
+    /**
+     * Sets whether holonomic is enabled or not (enabled for omni-directional drive)
+     * @param enableHolonomic Enabled if true, false otherwise
+     */
+    public void setEnableHolonomic(boolean enableHolonomic) {
+        this.enableHolonomic = enableHolonomic;
     }
 
     /**
@@ -432,6 +463,7 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
         imuTopic = bundle.getString(IMU_TOPIC_KEY, "/ubloxTest/navheading");
         reverseLaserScan = bundle.getBoolean(REVERSE_LASER_SCAN_KEY, false);
         flipXYAxis = bundle.getBoolean(FLIP_X_Y_AXIS_KEY, false);
+        enableHolonomic = bundle.getBoolean(ENABLE_HOLONOMIC_KEY, false);
         invertX = bundle.getBoolean(INVERT_X_KEY, false);
         invertY = bundle.getBoolean(INVERT_Y_KEY, false);
         invertAngularVelocity = bundle.getBoolean(INVERT_ANGULAR_VELOCITY_KEY, false);
@@ -447,6 +479,7 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
         imuTopic = prefs.getString(RobotStorage.getPreferenceKey(IMU_TOPIC_KEY), "/ubloxTest/navheading");
         reverseLaserScan = prefs.getBoolean(RobotStorage.getPreferenceKey(REVERSE_LASER_SCAN_KEY), false);
         flipXYAxis = prefs.getBoolean(RobotStorage.getPreferenceKey(FLIP_X_Y_AXIS_KEY), true);
+        enableHolonomic = prefs.getBoolean(RobotStorage.getPreferenceKey(ENABLE_HOLONOMIC_KEY), false);
         invertX = prefs.getBoolean(RobotStorage.getPreferenceKey(INVERT_X_KEY), false);
         invertY = prefs.getBoolean(RobotStorage.getPreferenceKey(INVERT_Y_KEY), false);
         invertAngularVelocity = prefs.getBoolean(RobotStorage.getPreferenceKey(INVERT_ANGULAR_VELOCITY_KEY), false);
@@ -466,6 +499,7 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
         bundle.putString(IMU_TOPIC_KEY, imuTopic);
         bundle.putBoolean(REVERSE_LASER_SCAN_KEY, reverseLaserScan);
         bundle.putBoolean(FLIP_X_Y_AXIS_KEY, flipXYAxis);
+        bundle.putBoolean(ENABLE_HOLONOMIC_KEY, enableHolonomic);
         bundle.putBoolean(INVERT_X_KEY, invertX);
         bundle.putBoolean(INVERT_Y_KEY, invertY);
         bundle.putBoolean(INVERT_ANGULAR_VELOCITY_KEY, invertAngularVelocity);
@@ -481,6 +515,7 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
         prefs.putString(RobotStorage.getPreferenceKey(IMU_TOPIC_KEY), imuTopic);
         prefs.putBoolean(RobotStorage.getPreferenceKey(REVERSE_LASER_SCAN_KEY), reverseLaserScan);
         prefs.putBoolean(RobotStorage.getPreferenceKey(FLIP_X_Y_AXIS_KEY), flipXYAxis);
+        prefs.putBoolean(RobotStorage.getPreferenceKey(ENABLE_HOLONOMIC_KEY), enableHolonomic);
         prefs.putBoolean(RobotStorage.getPreferenceKey(INVERT_X_KEY), invertX);
         prefs.putBoolean(RobotStorage.getPreferenceKey(INVERT_Y_KEY), invertY);
         prefs.putBoolean(RobotStorage.getPreferenceKey(INVERT_ANGULAR_VELOCITY_KEY), invertAngularVelocity);

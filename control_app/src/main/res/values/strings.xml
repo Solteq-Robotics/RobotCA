@@ -196,6 +196,10 @@
     <string name="flip_x_y_axis_prompt">Flip X- and Y-axis</string>
     <string name="flip_x_y_axis_title">Flip X- and Y-axis</string>
     <string name="flip_x_y_axis_summary">Flip X- and Y-axis</string>
+    <string name="enable_holonomic_key">enable_holonomic_key</string>
+    <string name="enable_holonomic_prompt">Enable holonomic</string>
+    <string name="enable_holonomic_title">Enable holonomic</string>
+    <string name="enable_holonomic_summary">Enable holonomic</string>
     <string name="invert_x_axis_title">Invert X-Axis</string>
     <string name="invert_angular_velocity_title">Invert Angular Velocity</string>
     <string name="invert_y_axis_title">Invert Y-Axis</string>

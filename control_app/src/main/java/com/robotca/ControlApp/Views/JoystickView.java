@@ -430,7 +430,6 @@ public class JoystickView extends RelativeLayout implements AnimationListener,
      *                along the Y axis instead of angular velocities along the Z axis,
      *                {@code false} otherwise
      */
-    @SuppressWarnings("unused") // Maybe in the future...
     public void setHolonomic(boolean enabled) {
         holonomic = enabled;
     }
