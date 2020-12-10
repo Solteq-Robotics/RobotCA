@@ -522,8 +522,13 @@ public class LaserScanRenderer implements GLSurfaceView.Renderer, MessageListene
                 ranges[i] = MAX_RANGE;
 
             // x, y, z
-            x = (float) (ranges[i] * Math.cos(angle)) * invert_laser_scan;
-            y = (float) (ranges[i] * Math.sin(angle)) * invert_laser_scan;
+            if(PreferenceManager.getDefaultSharedPreferences(controlApp).getBoolean("flip_x_y_axis", true)) {
+                y = (float) (ranges[i] * Math.cos(angle)) * invert_laser_scan;
+                x = (float) (ranges[i] * Math.sin(angle)) * invert_laser_scan;
+            } else {
+                x = (float) (ranges[i] * Math.cos(angle)) * invert_laser_scan;
+                y = (float) (ranges[i] * Math.sin(angle)) * invert_laser_scan;
+            }
 
             p = ranges[i];
 
