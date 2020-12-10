@@ -826,7 +826,11 @@ public class ControlApp extends RosActivity implements ListView.OnItemClickListe
         hudFragment.setBeepsEnabled(prefs.getBoolean(getString(R.string.prefs_warning_beep_key), true));
 
         // Enable holonomic movement
-        joystickFragment.getJoystickView().setHolonomic(prefs.getBoolean(getString(R.string.enable_holonomic_key), false));
+        if (joystickFragmentLeft != null && getControlMode().ordinal() == ControlMode.TwoJoystick.ordinal()) {
+            joystickFragmentLeft.getJoystickView().setHolonomic(prefs.getBoolean(getString(R.string.enable_holonomic_key), false));
+        } else { // only right joystick is in use
+            joystickFragmentRight.getJoystickView().setHolonomic(prefs.getBoolean(getString(R.string.enable_holonomic_key), false));
+        }
 
         // Refresh topic subscribers/publishers
         controller.refreshTopics();
