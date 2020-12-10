@@ -84,8 +84,8 @@ public class RobotInfo implements Comparable<RobotInfo>, Savable {
     public RobotInfo() {
         //id = UUID.randomUUID();
         name = "Robot" + robotCount++;
-        masterUriString = "http://localhost:11311";
-        joystickTopic = "/joy_teleop/cmd_vel";
+        masterUriString = "http://192.168.0.102:11311";
+        joystickTopic = "/cmd_vel";
         cameraTopic = "/image_raw/compressed";
         laserTopic = "/scan";
         navsatTopic = "/navsat/fix";
